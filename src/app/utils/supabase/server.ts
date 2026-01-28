@@ -1,4 +1,5 @@
 import { createServerClient } from '@supabase/ssr';
+import { createClient } from "@supabase/supabase-js";
 import { cookies } from 'next/headers';
 
 export const useServerSideSupabaseServiceRoleClient = async () => {
@@ -24,4 +25,20 @@ export const useServerSideSupabaseServiceRoleClient = async () => {
      );
 
      return supabase
+}
+
+export function createSupabaseAnonClient() {
+     return createClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL!,
+          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+          {
+               auth: { persistSession: false },
+          }
+     );
+}
+
+export function createSupabaseServiceClient() {
+     return createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SB_SERVICE_KEY!, {
+          auth: { persistSession: false },
+     });
 }
